@@ -6,7 +6,7 @@ import ErrorModal from "./components/errorModal/ErrorModal";
 
 function App() {
   const [users, setUsers] = useState([]);
-  const [error, setError] = useState({});
+  const [error, setError] = useState(null);
 
   const addUserHandler = (userInput) => {
     // Use the spread operator to create a new array with the updated user list.
