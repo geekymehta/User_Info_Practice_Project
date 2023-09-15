@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+
 import AddUser from "./components/users/AddUser";
 import UserList from "./components/users/UserList";
+import ErrorModal from "./components/errorModal/ErrorModal";
 
 function App() {
   const [users, setUsers] = useState([]);
+  const [error, setError] = useState({});
 
   const addUserHandler = (userInput) => {
     // Use the spread operator to create a new array with the updated user list.
@@ -11,9 +14,24 @@ function App() {
     console.log(users); // This will log the previous state, not the updated one.
   };
 
+  const errorHandler = (errorInfo) => {
+    setError(errorInfo);
+  };
+
+  const modalConfirmHandler = () => {
+    setError(null);
+  };
+
   return (
     <div>
-      <AddUser onAddUser={addUserHandler} />
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={modalConfirmHandler}
+        />
+      )}
+      <AddUser onAddUser={addUserHandler} onError={errorHandler} />
       <UserList data={users} />
     </div>
   );

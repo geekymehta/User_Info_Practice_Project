@@ -1,6 +1,6 @@
 import { useState } from "react";
+
 import Card from "../ui/Card";
-import "../../index.css";
 import Button from "./Button";
 
 const AddUser = (props) => {
@@ -8,6 +8,25 @@ const AddUser = (props) => {
   const [userInput, setUserInput] = useState(initialInput);
   const addUserHandler = (event) => {
     event.preventDefault();
+    if (
+      userInput.username.trim().length === 0 ||
+      userInput.age.trim().length === 0
+    ) {
+      const errorInfo = {
+        title: "Invalid input",
+        message: "Please enter a valid name and age(non-empty values)."
+      };
+      props.onError(errorInfo);
+      return;
+    }
+    if (userInput.age < 1) {
+      const errorInfo = {
+        title: "Invalid age",
+        message: "Please enter valid age[>0]."
+      };
+      props.onError(errorInfo);
+      return;
+    }
     props.onAddUser(userInput);
     setUserInput({ username: "", age: "" });
   };
